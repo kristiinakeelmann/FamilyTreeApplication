@@ -1,14 +1,9 @@
 package com.example.demo;
 
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 import org.springframework.web.bind.annotation.*;
-
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
-
-import org.springframework.hateoas.CollectionModel;
-import org.springframework.hateoas.EntityModel;
 
 
 @RestController
@@ -16,33 +11,25 @@ class PersonController {
 
     private final PersonRepository repository;
 
-    private final PersonModelAssembler assembler;
-
-    PersonController(PersonRepository repository, PersonModelAssembler assembler) {
+    PersonController(PersonRepository repository) {
         this.repository = repository;
-        this.assembler = assembler;
     }
 
 
     @GetMapping("/persons")
-    CollectionModel<EntityModel<Person>> all() {
+    List<Person> all() {
 
-        List<EntityModel<Person>> persons = repository.findAll().stream()
-                .map(assembler::toModel)
-                .collect(Collectors.toList());
-
-        return new CollectionModel<>(persons,
-                linkTo(methodOn(PersonController.class).all()).withSelfRel());
+        List<Person> persons = repository.findAll();
+        return persons;
     }
 
 
     @GetMapping("/persons/{id}")
-    EntityModel<Person> one(@PathVariable Long id) {
+    Person one(@PathVariable Long id) {
 
         Person person = repository.findById(id)
                 .orElseThrow(() -> new PersonNotFoundException(id));
-
-        return assembler.toModel(person);
+        return person;
 
     }
 
@@ -54,22 +41,20 @@ class PersonController {
 
 
     @PutMapping("/persons/{id}")
-    Person changePerson(@RequestBody Person newPerson, @PathVariable Long id) {
+    Person changePerson(@RequestBody Person incomingPerson, @PathVariable Long id) {
 
-        return repository.findById(id)
-                .map(person -> {
-                    person.setFirstName(newPerson.getFirstName());
-                    person.setLastName(newPerson.getLastName());
-                    person.setGender(newPerson.getGender());
-                    person.setDateOfBirth(newPerson.getDateOfBirth());
-                    person.setBiologicalMotherId(newPerson.getBiologicalMotherId());
-                    person.setBiologicalFatherId(newPerson.getBiologicalFatherId());
-                    return repository.save(person);
-                })
-                .orElseGet(() -> {
-                    newPerson.setId(id);
-                    return repository.save(newPerson);
-                });
+        Optional<Person> existingPerson = repository.findById(id);
+
+        if (!existingPerson.isPresent()) {
+            throw new PersonNotFoundException(id);
+        }
+        Person person = existingPerson.get();
+        person.setFirstName(incomingPerson.getFirstName());
+        person.setLastName(incomingPerson.getLastName());
+        person.setGender(incomingPerson.getGender());
+        person.setDateOfBirth(incomingPerson.getDateOfBirth());
+        person.setBiologicalMotherId(incomingPerson.getBiologicalMotherId());
+        person.setBiologicalFatherId(incomingPerson.getBiologicalFatherId());
+        return repository.save(person);
     }
-
 }
