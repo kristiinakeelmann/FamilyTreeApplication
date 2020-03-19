@@ -24,7 +24,7 @@ class PersonController {
     }
 
 
-    @GetMapping("/persons/{id}")
+    @GetMapping("/person/{id}")
     Person one(@PathVariable Long id) {
 
         Person person = repository.findById(id)
@@ -34,13 +34,13 @@ class PersonController {
     }
 
 
-    @PostMapping("/persons")
+    @PostMapping("/person")
     Person addPerson(@RequestBody Person newPerson) {
         return repository.save(newPerson);
     }
 
 
-    @PutMapping("/persons/{id}")
+    @PutMapping("/person/{id}")
     Person changePerson(@RequestBody Person incomingPerson, @PathVariable Long id) {
 
         Optional<Person> existingPerson = repository.findById(id);
@@ -51,7 +51,7 @@ class PersonController {
         Person person = existingPerson.get();
         person.setFirstName(incomingPerson.getFirstName());
         person.setLastName(incomingPerson.getLastName());
-        person.setGender(incomingPerson.getGender());
+        person.setSex(incomingPerson.getSex());
         person.setDateOfBirth(incomingPerson.getDateOfBirth());
         person.setBiologicalMotherId(incomingPerson.getBiologicalMotherId());
         person.setBiologicalFatherId(incomingPerson.getBiologicalFatherId());

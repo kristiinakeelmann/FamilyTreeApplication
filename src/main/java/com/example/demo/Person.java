@@ -16,7 +16,7 @@ class Person {
     Long id;
     private String firstName;
     private String lastName;
-    private String gender;
+    private String sex;
     private LocalDate dateOfBirth;
     private Long biologicalMotherId;
     private Long biologicalFatherId;
@@ -24,10 +24,10 @@ class Person {
     Person() {
     }
 
-    Person(String firstName, String lastName, String gender, LocalDate dateOfBirth, Long biologicalMotherId, Long biologicalFatherId) {
+    Person(String firstName, String lastName, String sex, LocalDate dateOfBirth, Long biologicalMotherId, Long biologicalFatherId) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.gender = gender;
+        this.sex = sex;
         this.dateOfBirth = dateOfBirth;
         this.biologicalMotherId = biologicalMotherId;
         this.biologicalFatherId = biologicalFatherId;

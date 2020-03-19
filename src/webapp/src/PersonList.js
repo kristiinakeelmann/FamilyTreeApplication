@@ -29,11 +29,12 @@ class PersonList extends Component {
       return <tr key={person.id}>
               <td>{person.firstName}</td>
               <td>{person.lastName}</td>
-              <td>{person.gender}</td>
+              <td>{person.sex}</td>
+              <td>{person.dateOfBirth}</td>
 
         <td>
           <ButtonGroup>
-            <Button size="sm" color="primary" tag={Link} to={"/persons/" + person.id}>Edit</Button>
+            <Button size="sm" color="primary" tag={Link} to={"/person/" + person.id}>Edit</Button>
           </ButtonGroup>
         </td>
       </tr>
@@ -44,7 +45,7 @@ class PersonList extends Component {
         <AppNavbar/>
         <Container fluid>
           <div className="float-right">
-            <Button color="success" tag={Link} to="/persons/new">Add Person</Button>
+            <Button color="success" tag={Link} to="/person/new">Add Person</Button>
           </div>
           <h3>Family Tree</h3>
           <Table className="mt-4">
@@ -52,7 +53,8 @@ class PersonList extends Component {
             <tr>
               <th width="20%">First name</th>
               <th width="20%">Last name</th>
-              <th width="20%">Gender</th>
+              <th width="20%">Sex</th>
+              <th width="20%">Birthday</th>
             </tr>
             </thead>
             <tbody>
