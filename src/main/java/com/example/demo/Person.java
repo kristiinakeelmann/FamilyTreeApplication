@@ -32,4 +32,6 @@ class Person {
         this.biologicalMotherId = biologicalMotherId;
         this.biologicalFatherId = biologicalFatherId;
     }
+
+
 }
