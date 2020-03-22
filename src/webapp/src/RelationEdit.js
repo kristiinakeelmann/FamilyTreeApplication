@@ -62,8 +62,8 @@ class RelationEdit extends Component {
     }
 
     render() {
-        const {persons, isLoading} = this.state;
-
+        const persons = this.state.persons;
+        const isLoading = this.state.isLoading;
 
         if (isLoading) {
             return <p>Loading...</p>;

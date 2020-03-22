@@ -50,6 +50,9 @@ class PersonList extends Component {
           <div className="float-right">
             <Button color="success" tag={Link} to="/relation/new">Add Relation</Button>
           </div>
+          <div className="float-right">
+            <Button color="success" tag={Link} to="/familytree/new">Generate Family Tree</Button>
+          </div>
           <h3>Family Tree</h3>
           <Table className="mt-4">
             <thead>

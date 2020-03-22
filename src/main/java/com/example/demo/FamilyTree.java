@@ -2,6 +2,7 @@ package com.example.demo;
 
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -14,10 +15,10 @@ public class FamilyTree {
     private String motherFatherName;
     private String fatherMotherName;
     private String fatherFatherName;
-    private List<String> children;
-    private List<String> sisters;
-    private List<String> brothers;
-    private List<String> aunts;
-    private List<String> uncles;
+    private List<String> children = new ArrayList<>();
+    private List<String> sisters = new ArrayList<>();
+    private List<String> brothers = new ArrayList<>();
+    private List<String> aunts = new ArrayList<>();
+    private List<String> uncles = new ArrayList<>();
 
 }
