@@ -2,13 +2,16 @@ import React, { Component } from 'react';
 import { Button, ButtonGroup, Container, Table } from 'reactstrap';
 import AppNavbar from './AppNavbar';
 import { Link } from 'react-router-dom';
+import FilterSearch from './FilterSearch.js';
 
 class PersonList extends Component {
 
   constructor(props) {
     super(props);
     this.state = {persons: [], isLoading: true};
+
   }
+
 
   componentDidMount() {
     this.setState({isLoading: true});
@@ -18,6 +21,7 @@ class PersonList extends Component {
       .then(data => this.setState({persons: data, isLoading: false}));
   }
 
+
   render() {
     const {persons, isLoading} = this.state;
 
@@ -25,34 +29,10 @@ class PersonList extends Component {
       return <p>Loading...</p>;
     }
 
-
-    const personList = persons.map(person => {
-      return <tr key={person.id}>
-              <td>{person.firstName}</td>
-              <td>{person.lastName}</td>
-              <td>{person.sex}</td>
-              <td>{person.dateOfBirth}</td>
-        <td>
-          <ButtonGroup>
-            <Button size="sm" color="primary" tag={Link} to={"/person/" + person.id}>Edit</Button>
-          </ButtonGroup>
-        </td>
-      </tr>
-    });
-
     return (
       <div>
         <AppNavbar/>
         <Container fluid>
-          <div className="float-right">
-            <Button color="success" tag={Link} to="/person/new">Add Person</Button>
-          </div>
-          <div className="float-right">
-            <Button color="success" tag={Link} to="/relation/new">Add Relation</Button>
-          </div>
-          <div className="float-right">
-            <Button color="success" tag={Link} to="/familytree/new">Generate Family Tree</Button>
-          </div>
           <h3>Family Tree</h3>
           <Table className="mt-4">
             <thead>
@@ -64,7 +44,7 @@ class PersonList extends Component {
             </tr>
             </thead>
             <tbody>
-            {personList}
+           <FilterSearch content={persons}/>
             </tbody>
           </Table>
         </Container>
