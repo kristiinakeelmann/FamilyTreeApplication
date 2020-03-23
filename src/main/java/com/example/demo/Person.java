@@ -5,6 +5,7 @@ import lombok.Data;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
 @Data
@@ -14,7 +15,9 @@ class Person {
     private @Id
     @GeneratedValue
     Long id;
+    @Size(min=2, message="First name should have atleast 2 characters")
     private String firstName;
+    @Size(min=2, message="Last name should have atleast 2 characters")
     private String lastName;
     private String sex;
     private LocalDate dateOfBirth;

@@ -37,6 +37,7 @@ class PersonEdit extends Component {
         this.setState({item});
     }
 
+
     async handleSubmit(event) {
         event.preventDefault();
         const {item} = this.state;
@@ -60,10 +61,19 @@ class PersonEdit extends Component {
             },
             body: JSON.stringify(item),
 
-        });
+        }).then(function (response) {
+            if (response.status == 400) {
+                return response.json();
+            }
+        }).then(function (object) {
+            if (object != null) {
+                alert(object.errors[0].defaultMessage)
+            }
+        })
 
         this.props.history.push('/persons');
     }
+
 
     render() {
         const {item} = this.state;

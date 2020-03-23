@@ -5,6 +5,8 @@ import java.util.Optional;
 
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 
 @RestController
 class PersonController {
@@ -35,13 +37,13 @@ class PersonController {
 
 
     @PostMapping("/person")
-    Person addPerson(@RequestBody Person newPerson) {
+    Person addPerson(@Valid @RequestBody Person newPerson) {
         return repository.save(newPerson);
     }
 
 
     @PutMapping("/person/{id}")
-    Person changePerson(@RequestBody Person incomingPerson, @PathVariable Long id) {
+    Person changePerson(@Valid @RequestBody Person incomingPerson, @PathVariable Long id) {
 
         Optional<Person> existingPerson = repository.findById(id);
 
