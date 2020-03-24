@@ -53,7 +53,7 @@ class PersonEdit extends Component {
             path = '/person/';
         }
 
-        await fetch(path, {
+        const hasErrors = await fetch(path, {
             method: method,
             headers: {
                 'Accept': 'application/json',
@@ -62,16 +62,21 @@ class PersonEdit extends Component {
             body: JSON.stringify(item),
 
         }).then(function (response) {
+            console.log(response);
             if (response.status == 400) {
-                return response.json();
+                return response.json()
             }
+            else return null;
         }).then(function (object) {
             if (object != null) {
                 alert(object.errors[0].defaultMessage)
-            }
+                return true;
+            } else return false;
         })
 
-        this.props.history.push('/persons');
+        if(!hasErrors) {
+            this.props.history.push('/persons');
+        }
     }
 
 

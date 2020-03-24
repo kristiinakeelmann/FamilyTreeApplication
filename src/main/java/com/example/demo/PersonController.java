@@ -55,6 +55,7 @@ class PersonController {
         person.setLastName(incomingPerson.getLastName());
         person.setSex(incomingPerson.getSex());
         person.setDateOfBirth(incomingPerson.getDateOfBirth());
+        person.setDateOfDeath(incomingPerson.getDateOfDeath());
         person.setBiologicalMotherId(incomingPerson.getBiologicalMotherId());
         person.setBiologicalFatherId(incomingPerson.getBiologicalFatherId());
         return repository.save(person);

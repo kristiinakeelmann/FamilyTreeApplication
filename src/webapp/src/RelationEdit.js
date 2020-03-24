@@ -38,6 +38,35 @@ class RelationEdit extends Component {
         this.setState({selectedFatherId: event.target.value});
     }
 
+    getErrors() {
+
+        function getBirthYear(dateOfBirth) {
+            const parts = dateOfBirth.split('-');
+            const fullDate = new Date(parts[0], parts[1] - 1, parts[2]);
+            const year = fullDate.toDateString().split(" ")[3]
+            return year;
+        }
+
+        const selectedPerson = this.state.persons.filter(person => person.id == this.state.selectedPersonId)[0];
+        if (selectedPerson == null) {
+            return "Please select person";
+        }
+        const mother = this.state.persons.filter(person => person.id == this.state.selectedMotherId)[0];
+        if (mother != null) {
+            if (getBirthYear(selectedPerson.dateOfBirth) < getBirthYear(mother.dateOfBirth)) {
+                return "Mother has to be older than child";
+            }
+            const father = this.state.persons.filter(person => person.id == this.state.selectedFatherId)[0];
+            if (father != null) {
+                if (getBirthYear(selectedPerson.dateOfBirth) < getBirthYear(father.dateOfBirth)) {
+                    return "Father has to be older than child";
+                }
+            }
+
+            return null;
+        }
+    }
+
     async handleSubmit(event) {
         event.preventDefault();
         const selectedPersonId = this.state.selectedPersonId;
@@ -84,12 +113,14 @@ class RelationEdit extends Component {
                                    value={person.id}>{person.firstName + ' ' + person.lastName}</option>);
 
         const title = <h2>{'Add Relation'}</h2>;
-
+        const errorMessage = this.getErrors();
         return <div>
             <AppNavbar/>
             <Container>
                 {title}
+                {errorMessage ? errorMessage : null}
                 <Form onSubmit={this.handleSubmit}>
+
                     <FormGroup>
                         <Label for="exampleSelect">Select Person</Label>
                         <Input type="select" name="selectPerson" id="exampleSelect" onChange={this.handlePersonChange}>
