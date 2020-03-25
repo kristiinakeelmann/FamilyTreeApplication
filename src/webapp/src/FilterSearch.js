@@ -1,7 +1,7 @@
 import React from 'react';
 import ButtonGroup from "reactstrap/es/ButtonGroup";
-import { Button } from "reactstrap";
-import { Link } from "react-router-dom";
+import {Button, Container, Form, FormGroup, Label, Table, Input} from "reactstrap";
+import {Link} from "react-router-dom";
 
 export default class FilterSearch extends React.Component {
 
@@ -40,7 +40,6 @@ export default class FilterSearch extends React.Component {
         })
     }
 
-
     render() {
         const personReactComponents = this.state.items.map(person => {
             return <tr key={person.id}>
@@ -57,10 +56,27 @@ export default class FilterSearch extends React.Component {
         });
         return (
             <div>
-                <form>
-                    <input type="text" placeholder="Search" onChange={this.filterList}/>
-                </form>
-                {personReactComponents}
+                <Container>
+                    <h2>Persons</h2>
+                    <FormGroup>
+                        <Label>Search for person</Label>
+                        <Input type="text" placeholder="Search" onChange={this.filterList}/>
+                    </FormGroup>
+                    <Table className="mt-4">
+                        <thead>
+                        <tr>
+                            <th width="20%">First name</th>
+                            <th width="20%">Last name</th>
+                            <th width="20%">Sex</th>
+                            <th width="20%">Birthday</th>
+                            <th width="20%"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {personReactComponents}
+                        </tbody>
+                    </Table>
+                </Container>
             </div>
         );
     }

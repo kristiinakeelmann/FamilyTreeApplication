@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, ButtonGroup, Container, Table } from 'reactstrap';
+import { Button, ButtonGroup, Container, Table, Spinner } from 'reactstrap';
 import AppNavbar from './AppNavbar';
 import { Link } from 'react-router-dom';
 import FilterSearch from './FilterSearch.js';
@@ -23,30 +23,18 @@ class PersonList extends Component {
 
 
   render() {
-    const {persons, isLoading} = this.state;
+    const persons = this.state.persons;
+    const isLoading = this.state.isLoading;
 
     if (isLoading) {
-      return <p>Loading...</p>;
+      return <Spinner style={{ width: '3rem', height: '3rem' }} type="grow"/>;
     }
 
     return (
       <div>
         <AppNavbar/>
-        <Container fluid>
-          <h3>Family Tree</h3>
-          <Table className="mt-4">
-            <thead>
-            <tr>
-              <th width="20%">First name</th>
-              <th width="20%">Last name</th>
-              <th width="20%">Sex</th>
-              <th width="20%">Birthday</th>
-            </tr>
-            </thead>
-            <tbody>
+        <Container>
            <FilterSearch content={persons}/>
-            </tbody>
-          </Table>
         </Container>
       </div>
     );

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Link, withRouter} from 'react-router-dom';
-import {Button, Container, Form, FormGroup, Input, Label} from 'reactstrap';
+import {Button, Container, Form, FormGroup, Input, Label, Alert, Spinner} from 'reactstrap';
 import AppNavbar from './AppNavbar';
 
 class RelationEdit extends Component {
@@ -19,15 +19,27 @@ class RelationEdit extends Component {
 
     componentDidMount() {
         this.setState({isLoading: true});
+        this.setState({selectedPersonId: 1});
+        this.setState({selectedMotherId: 2});
+        this.setState({selectedFatherId: 3});
 
         fetch('/persons')
             .then(response => response.json())
             .then(data => this.setState({persons: data, isLoading: false}));
     }
 
+    getPerson(id) {
+        return this.state.persons.filter(person => person.id == id)[0];
+    }
+
 
     handlePersonChange(event) {
-        this.setState({selectedPersonId: event.target.value});
+        const selectedPersonId = event.target.value;
+        this.setState({selectedPersonId: selectedPersonId});
+        if (selectedPersonId) {
+            this.setState({selectedMotherId: this.getPerson(selectedPersonId).biologicalMotherId})
+            this.setState({selectedFatherId: this.getPerson(selectedPersonId).biologicalFatherId})
+        }
     }
 
     handleMotherChange(event) {
@@ -47,22 +59,21 @@ class RelationEdit extends Component {
             return year;
         }
 
-        const selectedPerson = this.state.persons.filter(person => person.id == this.state.selectedPersonId)[0];
+        const selectedPerson = this.getPerson(this.state.selectedPersonId);
         if (selectedPerson == null) {
             return "Please select person";
         }
-        const mother = this.state.persons.filter(person => person.id == this.state.selectedMotherId)[0];
+        const mother = this.getPerson(this.state.selectedMotherId);
         if (mother != null) {
             if (getBirthYear(selectedPerson.dateOfBirth) < getBirthYear(mother.dateOfBirth)) {
                 return "Mother has to be older than child";
             }
-            const father = this.state.persons.filter(person => person.id == this.state.selectedFatherId)[0];
+            const father = this.getPerson(this.state.selectedFatherId);
             if (father != null) {
                 if (getBirthYear(selectedPerson.dateOfBirth) < getBirthYear(father.dateOfBirth)) {
                     return "Father has to be older than child";
                 }
             }
-
             return null;
         }
     }
@@ -86,7 +97,6 @@ class RelationEdit extends Component {
             body: JSON.stringify(selectedPerson),
 
         });
-
         this.props.history.push('/persons');
     }
 
@@ -95,7 +105,7 @@ class RelationEdit extends Component {
         const isLoading = this.state.isLoading;
 
         if (isLoading) {
-            return <p>Loading...</p>;
+            return <Spinner style={{width: '3rem', height: '3rem'}} type="grow"/>;
         }
 
         let optionItems = persons
@@ -114,28 +124,37 @@ class RelationEdit extends Component {
 
         const title = <h2>{'Add Relation'}</h2>;
         const errorMessage = this.getErrors();
+
         return <div>
             <AppNavbar/>
             <Container>
                 {title}
-                {errorMessage ? errorMessage : null}
+                {errorMessage ? <Alert color="warning"> {errorMessage} </Alert> : null}
                 <Form onSubmit={this.handleSubmit}>
-
                     <FormGroup>
                         <Label for="exampleSelect">Select Person</Label>
-                        <Input type="select" name="selectPerson" id="exampleSelect" onChange={this.handlePersonChange}>
+                        <Input type="select" name="selectPerson" id="exampleSelect"
+                               value={this.state.selectedPersonId ? this.state.selectedPersonId : null}
+                               onChange={this.handlePersonChange}>
+                            <option value=""></option>
                             {optionItems}
                         </Input>
                     </FormGroup>
                     <FormGroup>
                         <Label for="exampleSelect">Select Biological Mother</Label>
-                        <Input type="select" name="selectMother" id="exampleSelect" onChange={this.handleMotherChange}>
+                        <Input type="select" name="selectMother" id="exampleSelect"
+                               value={this.state.selectedMotherId ? this.state.selectedMotherId : null}
+                               onChange={this.handleMotherChange}>
+                            <option value=""></option>
                             {optionItemsMothers}
                         </Input>
                     </FormGroup>
                     <FormGroup>
                         <Label for="exampleSelect">Select Biological Father</Label>
-                        <Input type="select" name="selectFather" id="exampleSelect" onChange={this.handleFatherChange}>
+                        <Input type="select" name="selectFather" id="exampleSelect"
+                               value={this.state.selectedFatherId ? this.state.selectedFatherId : null}
+                               onChange={this.handleFatherChange}>
+                            <option value=""></option>
                             {optionItemsFathers}
                         </Input>
                     </FormGroup>

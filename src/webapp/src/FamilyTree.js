@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {withRouter} from 'react-router-dom';
-import {Container} from 'reactstrap';
+import {Container, Spinner} from 'reactstrap';
 import FamilyTreeTemplate from './familytreetemplate.svg';
 
 
@@ -38,7 +38,7 @@ class FamilyTree extends Component {
         const familyMembers = this.state.familyMembers;
 
         if (isLoading) {
-            return <p>Loading...</p>;
+            return <Spinner style={{width: '3rem', height: '3rem'}} type="grow"/>;
         }
 
         const selectedPersonName = familyMembers.selectedPersonName;

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Link, withRouter} from 'react-router-dom';
-import {Button, Container, Form, FormGroup, Input, Label} from 'reactstrap';
+import {Button, Container, Form, FormGroup, Input, Label, FormText} from 'reactstrap';
 import AppNavbar from './AppNavbar';
 
 class PersonEdit extends Component {
@@ -65,8 +65,7 @@ class PersonEdit extends Component {
             console.log(response);
             if (response.status == 400) {
                 return response.json()
-            }
-            else return null;
+            } else return null;
         }).then(function (object) {
             if (object != null) {
                 alert(object.errors[0].defaultMessage)
@@ -74,7 +73,7 @@ class PersonEdit extends Component {
             } else return false;
         })
 
-        if(!hasErrors) {
+        if (!hasErrors) {
             this.props.history.push('/persons');
         }
     }
@@ -100,18 +99,27 @@ class PersonEdit extends Component {
                                onChange={this.handleChange} autoComplete="lastName"/>
                     </FormGroup>
                     <FormGroup>
-                        <Label for="sex">Sex</Label>
-                        <div>
-                            <Input type="radio" name="sex" id="sexMale" value={item.sex || 'male'}
-                                   onChange={this.handleChange} autoComplete="sex"/> Male
-                            <Input type="radio" name="sex" id="sexFemale" value={item.sex || 'female'}
-                                   onChange={this.handleChange} autoComplete="sex"/> Female
-                        </div>
+                        <Label for="genderSelect">Sex</Label>
+                        <FormGroup check>
+                            <Label check>
+                                <Input type="radio" name="sex" id="sexMale" value={item.sex || 'male'}
+                                       onChange={this.handleChange} autoComplete="sex"/> Male
+                            </Label>
+                        </FormGroup>
+                        <FormGroup check>
+                            <Label check>
+                                <Input type="radio" name="sex" id="sexFemale" value={item.sex || 'female'}
+                                       onChange={this.handleChange} autoComplete="sex"/> Female
+                            </Label>
+                        </FormGroup>
                     </FormGroup>
                     <FormGroup>
                         <Label for="dateOfBirth">Birthday</Label>
                         <Input type="text" name="dateOfBirth" id="dateOfBirth" value={item.dateOfBirth || ''}
                                onChange={this.handleChange} autoComplete="dateOfBirth"/>
+                        <FormText color="muted">
+                            Format 1992-08-06
+                        </FormText>
                     </FormGroup>
                     <FormGroup>
                         <Button color="primary" type="submit">Save</Button>{' '}

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Link, withRouter} from 'react-router-dom';
-import {Button, Container, Form, FormGroup, Input, Label} from 'reactstrap';
+import {Button, Container, Form, FormGroup, Input, Label, Spinner} from 'reactstrap';
 import AppNavbar from './AppNavbar';
 import FamilyTree from "./FamilyTree";
 
@@ -46,7 +46,7 @@ class FamilyTreeView extends Component {
         const isLoading = this.state.isLoading;
 
         if (isLoading) {
-            return <p>Loading...</p>;
+            return <Spinner style={{ width: '3rem', height: '3rem' }} type="grow" />;
         }
 
         let optionItems = persons
@@ -62,7 +62,7 @@ class FamilyTreeView extends Component {
                 <Form onSubmit={this.handleSubmit}>
                     <FormGroup>
                         <Label for="exampleSelect">Select Person</Label>
-                        <Input type="select" name="selectPerson" id="exampleSelect" onChange={this.handlePersonChange}>
+                        <Input type="select" name="selectPerson" id="exampleSelect" defaultValue={this.state.value || ''} onChange={this.handlePersonChange}>
                             {optionItems}
                         </Input>
                     </FormGroup>
