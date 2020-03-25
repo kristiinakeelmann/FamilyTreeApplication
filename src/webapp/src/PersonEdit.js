@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Link, withRouter} from 'react-router-dom';
-import {Button, Container, Form, FormGroup, Input, Label, FormText} from 'reactstrap';
+import {Button, Container, Form, FormGroup, Input, Label, FormText, Alert} from 'reactstrap';
 import AppNavbar from './AppNavbar';
 
 class PersonEdit extends Component {
@@ -68,10 +68,11 @@ class PersonEdit extends Component {
             } else return null;
         }).then(function (object) {
             if (object != null) {
-                alert(object.errors[0].defaultMessage)
-                return true;
+                const errormessage = object.errors[0].defaultMessage;
+                return errormessage;
             } else return false;
         })
+        this.setState({hasErrors: hasErrors});
 
         if (!hasErrors) {
             this.props.history.push('/persons');
@@ -79,14 +80,17 @@ class PersonEdit extends Component {
     }
 
 
+
     render() {
         const {item} = this.state;
         const title = <h2>{item.id ? 'Edit Person' : 'Add Person'}</h2>;
+        const errorMessage = this.state.hasErrors;
 
         return <div>
             <AppNavbar/>
             <Container>
                 {title}
+                {errorMessage ? <Alert color="danger"> {errorMessage} </Alert> : null}
                 <Form onSubmit={this.handleSubmit}>
                     <FormGroup>
                         <Label for="firstName">First name</Label>
