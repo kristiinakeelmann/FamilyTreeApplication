@@ -22,6 +22,7 @@ class FamilyTreeView extends Component {
 
     componentDidMount() {
         this.setState({isLoading: true});
+        this.setState({selectedPersonId: 1});
 
         fetch('/persons')
             .then(response => response.json())
@@ -30,8 +31,8 @@ class FamilyTreeView extends Component {
 
 
     handlePersonChange(event) {
-        event.preventDefault();
-        this.setState({selectedPersonId: event.target.value});
+        const selectedPersonId = event.target.value;
+        this.setState({selectedPersonId: selectedPersonId});
     }
 
 
@@ -46,7 +47,7 @@ class FamilyTreeView extends Component {
         const isLoading = this.state.isLoading;
 
         if (isLoading) {
-            return <Spinner style={{ width: '3rem', height: '3rem' }} type="grow" />;
+            return <Spinner style={{width: '3rem', height: '3rem'}} type="grow"/>;
         }
 
         let optionItems = persons
@@ -62,7 +63,9 @@ class FamilyTreeView extends Component {
                 <Form onSubmit={this.handleSubmit}>
                     <FormGroup>
                         <Label for="exampleSelect">Select Person</Label>
-                        <Input type="select" name="selectPerson" id="exampleSelect" defaultValue={this.state.value || ''} onChange={this.handlePersonChange}>
+                        <Input type="select" name="selectPerson" id="exampleSelect"
+                               value={this.state.selectedPersonId ? this.state.selectedPersonId : null}
+                               onChange={this.handlePersonChange}>
                             {optionItems}
                         </Input>
                     </FormGroup>
@@ -70,10 +73,10 @@ class FamilyTreeView extends Component {
                         <Button color="primary" type="submit">Generate</Button>{' '}
                         <Button color="secondary" tag={Link} to="/persons">Cancel</Button>
                     </FormGroup>
+                    <FormGroup>
+                        {this.state.showComponent ? <FamilyTree selectedPersonId={this.state.selectedPersonId}/> : null}
+                    </FormGroup>
                 </Form>
-                <div>
-                    {this.state.showComponent ? <FamilyTree selectedPersonId={this.state.selectedPersonId}/> : null}
-                </div>
             </Container>
         </div>
     }

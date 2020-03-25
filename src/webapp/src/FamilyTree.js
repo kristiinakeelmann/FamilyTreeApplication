@@ -15,9 +15,7 @@ class FamilyTree extends Component {
         };
     }
 
-
-    componentDidMount() {
-        const {selectedPersonId} = this.props;
+    getFamilyTree(selectedPersonId) {
 
         let method = 'GET';
         let path = '/familytree/' + selectedPersonId;
@@ -32,6 +30,21 @@ class FamilyTree extends Component {
             .then(response => response.json())
             .then(data => this.setState({familyMembers: data, isLoading: false}));
     }
+
+
+    componentDidMount() {
+        const {selectedPersonId} = this.props;
+        this.getFamilyTree(selectedPersonId);
+    }
+
+
+    componentDidUpdate(previousProps) {
+        const selectedPersonId = this.props.selectedPersonId;
+        if (previousProps.selectedPersonId != selectedPersonId) {
+            this.getFamilyTree(selectedPersonId);
+        }
+    }
+
 
     render() {
         const isLoading = this.state.isLoading;
