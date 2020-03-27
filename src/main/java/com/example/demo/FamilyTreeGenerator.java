@@ -8,7 +8,6 @@ public class FamilyTreeGenerator {
 
     FamilyTree create(List<Person> allPersons, Long selectedPersonId) {
 
-
         PersonFinder personFinder = new PersonFinder(allPersons);
         FamilyTree familyTree = new FamilyTree();
 

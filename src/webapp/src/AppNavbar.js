@@ -14,6 +14,7 @@ export default class AppNavbar extends Component {
             <NavbarBrand tag={Link} to="/person/new">Add Person</NavbarBrand>
             <NavbarBrand tag={Link} to="/relation/new">Add Relation</NavbarBrand>
             <NavbarBrand tag={Link} to="/familytree/new">Generate Family Tree</NavbarBrand>
+            <NavbarBrand tag={Link} to="/statistics">Statistics</NavbarBrand>
                 <Nav className="ml-auto" navbar>
                     <NavItem>
                         <NavLink href="https://github.com/kristiinakeelmann/FamilyTreeApplication">GitHub</NavLink>
