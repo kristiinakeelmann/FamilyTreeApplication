@@ -5,7 +5,6 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Arrays;
-import java.util.Collections;
 
 import static java.util.Arrays.asList;
 
@@ -215,7 +214,7 @@ public class FamilyTreeGeneratorTest {
 
         FamilyTree expected = new FamilyTree();
         expected.setSelectedPersonName("Rutt Keelmann");
-        expected.setChildren(Collections.singletonList("Kristiina Keelmann"));
+        expected.setChildren(Arrays.asList("Kristiina Keelmann"));
         Assert.assertEquals(expected, result);
     }
 

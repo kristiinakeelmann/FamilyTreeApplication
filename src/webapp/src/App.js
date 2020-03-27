@@ -6,6 +6,8 @@ import PersonEdit from './PersonEdit';
 import RelationEdit from './RelationEdit';
 import FamilyTreeView from "./FamilyTreeView";
 
+
+
 class App extends Component {
     render() {
         return (
