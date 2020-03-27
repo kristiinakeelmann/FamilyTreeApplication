@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Link, withRouter} from 'react-router-dom';
-import { Button, Container, Form, FormGroup, Input, Label, Alert, Spinner, Card, CardImg, CardText, CardBody, CardLink,
+import {
+    Button, Container, Form, FormGroup, Input, Label, Alert, Spinner, Card, CardImg, CardText, CardBody, CardLink,
     CardTitle, CardSubtitle, Row, Col, CardGroup
 } from 'reactstrap';
 import AppNavbar from './AppNavbar';
@@ -14,6 +15,7 @@ class StatisticsView extends Component {
         this.state = {
             persons: [],
             youngestAunt: [],
+            youngestUncle: [],
         };
 
         this.handlePersonChange = this.handlePersonChange.bind(this);
@@ -24,6 +26,7 @@ class StatisticsView extends Component {
         this.setState({isLoading: true});
         this.setState({selectedPersonId: 1});
         this.getYoungestAunt();
+        this.getYoungestUncle();
 
         fetch('/persons')
             .then(response => response.json())
@@ -52,6 +55,22 @@ class StatisticsView extends Component {
             .then(data => this.setState({youngestAunt: data, isLoading: false}));
     }
 
+    getYoungestUncle() {
+
+        let method = 'GET';
+        let path = '/youngestuncle';
+
+        fetch(path, {
+            method: method,
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+        })
+            .then(response => response.json())
+            .then(data => this.setState({youngestUncle: data, isLoading: false}));
+    }
+
     getErrors() {
 
     }
@@ -60,6 +79,9 @@ class StatisticsView extends Component {
         const persons = this.state.persons;
         const isLoading = this.state.isLoading;
         const youngestAunt = this.state.youngestAunt.firstName;
+        const youngestAuntId = this.state.youngestAunt.id;
+        const youngestUncle = this.state.youngestUncle.firstName;
+        const youngestUncleId = this.state.youngestUncle.id;
 
         if (isLoading) {
             return <Spinner style={{width: '3rem', height: '3rem'}} type="grow"/>;
@@ -96,13 +118,13 @@ class StatisticsView extends Component {
                         <CardTitle>Youngest Aunt</CardTitle>
                         <img class="center" src={FemaleAvatar} alt="FemaleAvatar"/>
                         <CardText>{youngestAunt}</CardText>
-                        <CardLink href="#">Check her details</CardLink>
+                        <CardLink href="#" tag={Link} to={"/person/" + youngestAuntId}>Check her details </CardLink>
                     </Card>
                     <Card body className="text-center">
                         <CardTitle>Youngest Uncle</CardTitle>
                         <img class="center" src={MaleAvatar} alt="MaleAvatar"/>
-                        <CardText>Uncle name</CardText>
-                        <CardLink href="#">Check his details </CardLink>
+                        <CardText>{youngestUncle}</CardText>
+                        <CardLink href="#" tag={Link} to={"/person/" + youngestUncleId}>Check his details </CardLink>
                     </Card>
                 </CardGroup>
             </Container>

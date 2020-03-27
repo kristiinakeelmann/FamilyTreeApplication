@@ -23,6 +23,13 @@ public class StatisticsController {
         return statisticsService.youngestAunt(allPersons);
     }
 
+    @GetMapping("/youngestuncle")
+    Person findYoungestUncle() {
+
+        List<Person> allPersons = repository.findAll();
+        return statisticsService.youngestUncle(allPersons);
+    }
+
 }
 
 

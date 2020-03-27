@@ -93,4 +93,13 @@ public class StatisticsServiceTest {
         Assert.assertEquals("Kristiina Keelmann", youngestAuntName);
 
     }
+
+    @Test
+    public void youngestUncle() {
+
+        Person youngestUncle = statisticsService.youngestUncle(allPersons);
+        String youngestUncleName = youngestUncle.getFirstName() + ' ' + youngestUncle.getLastName();
+        Assert.assertEquals("Reigo Keelmann", youngestUncleName);
+
+    }
 }
