@@ -67,13 +67,17 @@ public class PersonFinder {
         }
         List<Person> parents = findParents(selectedPerson);
         List<Person> siblings = new ArrayList<>();
+
         for (int i = 0; i < parents.size(); i++) {
             Person parent = parents.get(i);
             List<Person> parentChildren = findChildren(parent);
             for (int j = 0; j < parentChildren.size(); j++) {
                 Person parentChild = parentChildren.get(j);
-                if(parentChild != selectedPerson) {
-                    siblings.add(parentChild);
+                if (parentChild != selectedPerson) {
+                    if (!siblings.contains(parentChild)) {
+                        siblings.add(parentChild);
+                    }
+
                 }
             }
 

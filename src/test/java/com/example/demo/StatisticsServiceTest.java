@@ -5,17 +5,74 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 
 import static java.util.Arrays.asList;
 
 public class StatisticsServiceTest {
 
-    List<Person> allPersons;
     StatisticsService statisticsService = new StatisticsService();
 
-    @Before
-    public void setup() {
+    private FamilyTreeGenerator generator = new FamilyTreeGenerator();
+
+
+    @Test
+    public void youngestAunt() {
+
+        Person youngestAunt = statisticsService.youngestAunt(family());
+        String youngestAuntName = youngestAunt.getFirstName() + ' ' + youngestAunt.getLastName();
+        Assert.assertEquals("Kristiina Keelmann", youngestAuntName);
+
+    }
+
+    @Test
+    public void youngestUncle() {
+
+        Person youngestUncle = statisticsService.youngestUncle(family());
+        String youngestUncleName = youngestUncle.getFirstName() + ' ' + youngestUncle.getLastName();
+        Assert.assertEquals("Reigo Keelmann", youngestUncleName);
+
+    }
+
+    @Test
+    public void birthOrder() {
+
+        int birthOrder = statisticsService.birthOrder(family(), 1L);
+        Assert.assertEquals(4, birthOrder);
+
+    }
+
+    @Test
+    public void birthOrderOneChild() {
+
+        Person selectedPerson = new Person();
+        selectedPerson.setId(1L);
+        selectedPerson.setFirstName("Rutt");
+        selectedPerson.setLastName("Keelmann");
+        selectedPerson.setBiologicalMotherId(2L);
+        selectedPerson.setBiologicalFatherId(3L);
+        selectedPerson.setSex("female");
+        selectedPerson.setDateOfBirth(LocalDate.of(1950, 12, 1));
+        Person mother = new Person();
+        mother.setId(2L);
+        mother.setFirstName("Heljo");
+        mother.setLastName("Igarik");
+        mother.setDateOfBirth(LocalDate.of(1930, 5, 1));
+        Person father = new Person();
+        father.setId(3L);
+        father.setFirstName("Elmar");
+        father.setLastName("Igarik");
+        father.setDateOfBirth(LocalDate.of(1930, 6, 22));
+
+        List<Person> result = asList(selectedPerson, mother, father);
+
+        int birthOrder = statisticsService.birthOrder(result, 1L);
+        Assert.assertEquals(1, birthOrder);
+
+    }
+
+    private List<Person> family() {
 
         Person selectedPerson = new Person();
         selectedPerson.setId(1L);
@@ -42,6 +99,7 @@ public class StatisticsServiceTest {
         firstSister.setFirstName("Ragne");
         firstSister.setLastName("Lill");
         firstSister.setBiologicalMotherId(2L);
+        firstSister.setBiologicalFatherId(3L);
         firstSister.setSex("female");
         firstSister.setDateOfBirth(LocalDate.of(1978, 12, 28));
         Person secondSister = new Person();
@@ -49,6 +107,7 @@ public class StatisticsServiceTest {
         secondSister.setFirstName("Krista");
         secondSister.setLastName("Keelmann");
         secondSister.setBiologicalMotherId(2L);
+        secondSister.setBiologicalFatherId(3L);
         secondSister.setSex("female");
         secondSister.setDateOfBirth(LocalDate.of(1980, 7, 2));
         Person firstBrother = new Person();
@@ -56,6 +115,7 @@ public class StatisticsServiceTest {
         firstBrother.setFirstName("Kaspar");
         firstBrother.setLastName("Keelmann");
         firstBrother.setBiologicalMotherId(2L);
+        firstBrother.setBiologicalFatherId(3L);
         firstBrother.setSex("male");
         firstBrother.setDateOfBirth(LocalDate.of(1979, 3, 23));
         Person secondBrother = new Person();
@@ -63,6 +123,7 @@ public class StatisticsServiceTest {
         secondBrother.setFirstName("Reigo");
         secondBrother.setLastName("Keelmann");
         secondBrother.setBiologicalMotherId(2L);
+        secondBrother.setBiologicalFatherId(3L);
         secondBrother.setSex("male");
         secondBrother.setDateOfBirth(LocalDate.of(1994, 8, 20));
         Person firstSisterFirstChild = new Person();
@@ -80,26 +141,6 @@ public class StatisticsServiceTest {
         firstSisterSecondChild.setSex("female");
         firstSisterFirstChild.setDateOfBirth(LocalDate.of(2010, 4, 20));
 
-        allPersons = asList(selectedPerson, mother, father, firstSister, secondSister, firstBrother, secondBrother, firstSisterFirstChild, firstSisterSecondChild);
-
-    }
-
-
-    @Test
-    public void youngestAunt() {
-
-        Person youngestAunt = statisticsService.youngestAunt(allPersons);
-        String youngestAuntName = youngestAunt.getFirstName() + ' ' + youngestAunt.getLastName();
-        Assert.assertEquals("Kristiina Keelmann", youngestAuntName);
-
-    }
-
-    @Test
-    public void youngestUncle() {
-
-        Person youngestUncle = statisticsService.youngestUncle(allPersons);
-        String youngestUncleName = youngestUncle.getFirstName() + ' ' + youngestUncle.getLastName();
-        Assert.assertEquals("Reigo Keelmann", youngestUncleName);
-
+        return asList(selectedPerson, mother, father, firstSister, secondSister, firstBrother, secondBrother, firstSisterFirstChild, firstSisterSecondChild);
     }
 }

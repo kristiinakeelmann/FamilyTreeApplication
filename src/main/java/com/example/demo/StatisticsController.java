@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -30,6 +31,11 @@ public class StatisticsController {
         return statisticsService.youngestUncle(allPersons);
     }
 
+    @GetMapping("/birthorder/{id}")
+    Integer getBirthOrder(@PathVariable Long id) {
+
+        List<Person> allPersons = repository.findAll();
+        return statisticsService.birthOrder(allPersons, id);
+    }
+
 }
-
-

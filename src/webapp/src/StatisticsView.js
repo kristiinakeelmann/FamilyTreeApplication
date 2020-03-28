@@ -16,6 +16,7 @@ class StatisticsView extends Component {
             persons: [],
             youngestAunt: [],
             youngestUncle: [],
+            birthOrder: [],
         };
 
         this.handlePersonChange = this.handlePersonChange.bind(this);
@@ -33,11 +34,18 @@ class StatisticsView extends Component {
             .then(data => this.setState({persons: data, isLoading: false}));
     }
 
+    getPerson(id) {
+        return this.state.persons.filter(person => person.id == id)[0];
+    }
+
     handlePersonChange(event) {
+        event.preventDefault();
         const selectedPersonId = event.target.value;
         this.setState({selectedPersonId: selectedPersonId});
-        this.getFamilyTree(selectedPersonId);
+        this.getBirthOrder(selectedPersonId);
+
     }
+
 
     getYoungestAunt() {
 
@@ -71,7 +79,28 @@ class StatisticsView extends Component {
             .then(data => this.setState({youngestUncle: data, isLoading: false}));
     }
 
+    getBirthOrder(selectedPersonId) {
+
+        let method = 'GET';
+        let path = '/birthorder/' + selectedPersonId;
+
+        fetch(path, {
+            method: method,
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+        })
+            .then(response => response.json())
+            .then(data => this.setState({birthOrder: data, isLoading: false}));
+    }
+
     getErrors() {
+
+        const selectedPerson = this.getPerson(this.state.selectedPersonId);
+        if (selectedPerson == null) {
+            return "Please select person";
+        }
 
     }
 
@@ -82,6 +111,7 @@ class StatisticsView extends Component {
         const youngestAuntId = this.state.youngestAunt.id;
         const youngestUncle = this.state.youngestUncle.firstName;
         const youngestUncleId = this.state.youngestUncle.id;
+        const birthOrder = this.state.birthOrder.toString();
 
         if (isLoading) {
             return <Spinner style={{width: '3rem', height: '3rem'}} type="grow"/>;
@@ -101,7 +131,7 @@ class StatisticsView extends Component {
                 {errorMessage ? <Alert color="warning"> {errorMessage} </Alert> : null}
                 <Form>
                     <FormGroup>
-                        <Label for="exampleSelect">Select Person</Label>
+                        <Label for="exampleSelect">Choose person to check the birth order</Label>
                         <Input type="select" name="selectPerson" id="exampleSelect"
                                value={this.state.selectedPersonId ? this.state.selectedPersonId : null}
                                onChange={this.handlePersonChange}>
@@ -110,7 +140,7 @@ class StatisticsView extends Component {
                         </Input>
                     </FormGroup>
                     <FormGroup>
-                        <Button color="primary" type="submit">Search</Button>{' '}
+                        {birthOrder}
                     </FormGroup>
                 </Form>
                 <CardGroup>

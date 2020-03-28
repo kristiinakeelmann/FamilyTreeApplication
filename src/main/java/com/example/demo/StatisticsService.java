@@ -1,7 +1,9 @@
 package com.example.demo;
 
+
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class StatisticsService {
@@ -77,5 +79,24 @@ public class StatisticsService {
 
         return getYoungestPerson(allUncles);
     }
+
+
+    public Integer birthOrder(List<Person> allPersons, Long selectedPersonId) {
+
+        PersonFinder personFinder = new PersonFinder(allPersons);
+        Person selectedPerson = personFinder.findPerson(selectedPersonId);
+        List<Person> siblings = personFinder.findSiblings(selectedPerson);
+        List<Person> siblingsAndSelectedPerson = new ArrayList<>();
+        siblingsAndSelectedPerson.addAll(siblings);
+        siblingsAndSelectedPerson.add(selectedPerson);
+
+        if (siblings.size() != 0) {
+            siblingsAndSelectedPerson.sort(Comparator.comparing(Person::getDateOfBirth));
+        }
+
+        Integer selectedPersonIndex = siblingsAndSelectedPerson.indexOf(selectedPerson) + 1;
+        return selectedPersonIndex;
+    }
+
 
 }

@@ -26,10 +26,10 @@ class LoadDatabase {
             log.info("Preloading " + repository.save(new Person("Väino", "Keelmann", "male", LocalDate.parse("1925-12-01"), LocalDate.parse("2019-12-20"), null, null)));
             log.info("Preloading " + repository.save(new Person("Kaspar", "Keelmann", "male", LocalDate.parse("1981-12-01"), null, 2L, 3L)));
             log.info("Preloading " + repository.save(new Person("Reigo", "Keelmann", "male", LocalDate.parse("1994-12-01"), LocalDate.parse("2017-04-10"), 2L, 3L)));
-            log.info("Preloading " + repository.save(new Person("Katarina", "Lill", "female", LocalDate.parse("2004-12-01"), null, 5L, null)));
-            log.info("Preloading " + repository.save(new Person("Elisabeth", "Lill", "female", LocalDate.parse("2008-12-01"), null, 5L, null)));
-            log.info("Preloading " + repository.save(new Person("Martin", "Keelmann", "male", LocalDate.parse("2006-12-01"), null, null, 10L)));
-            log.info("Preloading " + repository.save(new Person("Karolin", "Keelmann", "female", LocalDate.parse("2007-12-01"), null, null, 10L)));
+            log.info("Preloading " + repository.save(new Person("Katarina", "Lill", "female", LocalDate.parse("2008-12-01"), null, 5L, null)));
+            log.info("Preloading " + repository.save(new Person("Elisabeth", "Lill", "female", LocalDate.parse("2004-12-01"), null, 5L, null)));
+            log.info("Preloading " + repository.save(new Person("Martin", "Keelmann", "male", LocalDate.parse("2007-12-01"), null, null, 10L)));
+            log.info("Preloading " + repository.save(new Person("Karolin", "Keelmann", "female", LocalDate.parse("2005-12-01"), null, null, 10L)));
         };
     }
 }

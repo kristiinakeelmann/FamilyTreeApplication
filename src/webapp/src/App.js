@@ -16,10 +16,11 @@ class App extends Component {
                 <Switch>
                     <Route path='/' exact={true} component={PersonList}/>
                     <Route path='/persons' exact={true} component={PersonList}/>
-                    <Route path='/person/:id' component={PersonEdit}/>
-                    <Route path='/relation/:id' component={RelationEdit}/>
-                    <Route path='/familytree/:id' component={FamilyTreeView}/>
-                    <Route path='/statistics' component={StatisticsView}/>
+                    <Route path='/person/:id' exact={true} component={PersonEdit}/>
+                    <Route path='/relation/:id' exact={true} component={RelationEdit}/>
+                    <Route path='/familytree/:id' exact={true} component={FamilyTreeView}/>
+                    <Route path='/statistics' exact={true} component={StatisticsView}/>
+                    <Route component={PersonList}/>
                 </Switch>
             </Router>
         )
