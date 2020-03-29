@@ -38,4 +38,12 @@ public class StatisticsController {
         return statisticsService.birthOrder(allPersons, id);
     }
 
+    @GetMapping("/mostancestors")
+    Person mostAncestors() {
+
+        List<Person> allPersons = repository.findAll();
+        return statisticsService.mostAncestors(allPersons);
+    }
+
+
 }

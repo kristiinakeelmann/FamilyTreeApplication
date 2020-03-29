@@ -72,6 +72,32 @@ public class StatisticsServiceTest {
 
     }
 
+    @Test
+    public void mostAncestors() {
+
+        Person mostAncestors = statisticsService.mostAncestors(family());
+        String mostAncestorsName = mostAncestors.getFirstName() + ' ' + mostAncestors.getLastName();
+        Assert.assertEquals("Elisabeth Lill", mostAncestorsName);
+    }
+
+    @Test
+    public void noAncestors(){
+
+        Person firstPerson = new Person();
+        firstPerson.setId(1L);
+        firstPerson.setFirstName("Mari");
+        firstPerson.setLastName("Maasikas");
+        Person secondPerson = new Person();
+        secondPerson.setId(2L);
+        secondPerson.setFirstName("Tuuli");
+        secondPerson.setLastName("Tihane");
+
+        List<Person> result = asList(firstPerson, secondPerson);
+
+        Person mostAncestors = statisticsService.mostAncestors(result);
+        Assert.assertEquals(null, mostAncestors);
+    }
+
     private List<Person> family() {
 
         Person selectedPerson = new Person();
@@ -86,13 +112,15 @@ public class StatisticsServiceTest {
         mother.setId(2L);
         mother.setFirstName("Rutt");
         mother.setLastName("Keelmann");
-        mother.setBiologicalMotherId(4L);
+        mother.setBiologicalMotherId(16L);
+        mother.setBiologicalFatherId(17L);
         mother.setDateOfBirth(LocalDate.of(1950, 12, 1));
         Person father = new Person();
         father.setId(3L);
         father.setFirstName("Toivo");
         father.setLastName("Keelmann");
-        father.setBiologicalMotherId(5L);
+        father.setBiologicalMotherId(18L);
+        father.setBiologicalFatherId(19L);
         father.setDateOfBirth(LocalDate.of(1950, 6, 22));
         Person firstSister = new Person();
         firstSister.setId(10L);
@@ -140,7 +168,27 @@ public class StatisticsServiceTest {
         firstSisterSecondChild.setBiologicalMotherId(10L);
         firstSisterSecondChild.setSex("female");
         firstSisterFirstChild.setDateOfBirth(LocalDate.of(2010, 4, 20));
+        Person motherSideGrandMother = new Person();
+        motherSideGrandMother.setId(16L);
+        motherSideGrandMother.setFirstName("Heljo");
+        motherSideGrandMother.setLastName("Igarik");
+        motherSideGrandMother.setDateOfBirth(LocalDate.of(1930, 5, 6));
+        Person motherSideGrandFather = new Person();
+        motherSideGrandFather.setId(17L);
+        motherSideGrandFather.setFirstName("Elmar");
+        motherSideGrandFather.setLastName("Igarik");
+        motherSideGrandFather.setDateOfBirth(LocalDate.of(1930, 5, 6));
+        Person fatherSideGrandMother = new Person();
+        fatherSideGrandMother.setId(18L);
+        fatherSideGrandMother.setFirstName("Rea");
+        fatherSideGrandMother.setLastName("Keelmann");
+        fatherSideGrandMother.setDateOfBirth(LocalDate.of(1930, 5, 6));
+        Person fatherSideGrandFather = new Person();
+        fatherSideGrandFather.setId(19L);
+        fatherSideGrandFather.setFirstName("Väino");
+        fatherSideGrandFather.setLastName("Keelmann");
+        fatherSideGrandFather.setDateOfBirth(LocalDate.of(1930, 5, 6));
 
-        return asList(selectedPerson, mother, father, firstSister, secondSister, firstBrother, secondBrother, firstSisterFirstChild, firstSisterSecondChild);
+        return asList(selectedPerson, mother, father, firstSister, secondSister, firstBrother, secondBrother, firstSisterFirstChild, firstSisterSecondChild, motherSideGrandMother, motherSideGrandFather, fatherSideGrandMother, fatherSideGrandFather);
     }
 }

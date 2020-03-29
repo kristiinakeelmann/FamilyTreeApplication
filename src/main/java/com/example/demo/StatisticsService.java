@@ -99,4 +99,39 @@ public class StatisticsService {
     }
 
 
+    public List<Person> findAncestors(List<Person> allPersons, Long selectedPersonId) {
+
+        PersonFinder personFinder = new PersonFinder(allPersons);
+        List<Person> parents = new ArrayList<>();
+        List<Person> ancestors = new ArrayList<>();
+        Person selectedPerson = personFinder.findPerson(selectedPersonId);
+
+        parents.addAll(personFinder.findParents(selectedPerson));
+        for (int i = 0; i < parents.size(); i++) {
+            Person currentParent = parents.get(i);
+            List<Person> parentAncestors = findAncestors(allPersons, currentParent.getId());
+            ancestors.addAll(parentAncestors);
+        }
+        ancestors.addAll(parents);
+        return ancestors;
+    }
+
+    public Person mostAncestors(List<Person> allPersons) {
+        PersonFinder personFinder = new PersonFinder(allPersons);
+        Person currentlyMostAncestors = allPersons.get(0);
+
+        if (allPersons.size() != 0 && personFinder.findParents(currentlyMostAncestors).size() != 0) {
+            for (int i = 1; i < allPersons.size(); i++) {
+                Person currentPerson = allPersons.get(i);
+                List<Person> currentPersonAncestors = findAncestors(allPersons, currentPerson.getId());
+                List<Person> currentlyMostAncestorsAncestors = findAncestors(allPersons, currentlyMostAncestors.getId());
+                if (currentPersonAncestors.size() > currentlyMostAncestorsAncestors.size()) {
+                    currentlyMostAncestors = currentPerson;
+                }
+            }
+            return currentlyMostAncestors;
+
+        } else return null;
+
+    }
 }

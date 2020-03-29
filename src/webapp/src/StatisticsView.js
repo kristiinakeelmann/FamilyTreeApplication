@@ -7,6 +7,7 @@ import {
 import AppNavbar from './AppNavbar';
 import FemaleAvatar from './undraw_female_avatar_w3jk.svg';
 import MaleAvatar from './undraw_male_avatar_323b.svg';
+import AncestorAvatar from './undraw_gradma_wanr.svg';
 
 class StatisticsView extends Component {
 
@@ -16,6 +17,7 @@ class StatisticsView extends Component {
             persons: [],
             youngestAunt: [],
             youngestUncle: [],
+            mostAncestors: [],
             birthOrder: [],
         };
 
@@ -28,6 +30,7 @@ class StatisticsView extends Component {
         this.setState({selectedPersonId: 1});
         this.getYoungestAunt();
         this.getYoungestUncle();
+        this.getMostAncestors();
 
         fetch('/persons')
             .then(response => response.json())
@@ -95,6 +98,23 @@ class StatisticsView extends Component {
             .then(data => this.setState({birthOrder: data, isLoading: false}));
     }
 
+    getMostAncestors() {
+
+        let method = 'GET';
+        let path = '/mostancestors';
+
+        fetch(path, {
+            method: method,
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+        })
+            .then(response => response.json())
+            .then(data => this.setState({mostAncestors: data, isLoading: false}));
+    }
+
+
     getErrors() {
 
         const selectedPerson = this.getPerson(this.state.selectedPersonId);
@@ -112,6 +132,8 @@ class StatisticsView extends Component {
         const youngestUncle = this.state.youngestUncle.firstName;
         const youngestUncleId = this.state.youngestUncle.id;
         const birthOrder = this.state.birthOrder.toString();
+        const mostAncestors = this.state.mostAncestors.firstName;
+        const mostAncestorsId = this.state.mostAncestors.id;
 
         if (isLoading) {
             return <Spinner style={{width: '3rem', height: '3rem'}} type="grow"/>;
@@ -148,13 +170,21 @@ class StatisticsView extends Component {
                         <CardTitle>Youngest Aunt</CardTitle>
                         <img class="center" src={FemaleAvatar} alt="FemaleAvatar"/>
                         <CardText>{youngestAunt}</CardText>
-                        <CardLink href="#" tag={Link} to={"/person/" + youngestAuntId}>Check her details </CardLink>
+                        <CardLink href="#" tag={Link} to={"/person/" + youngestAuntId}>Check her details</CardLink>
                     </Card>
                     <Card body className="text-center">
                         <CardTitle>Youngest Uncle</CardTitle>
                         <img class="center" src={MaleAvatar} alt="MaleAvatar"/>
                         <CardText>{youngestUncle}</CardText>
-                        <CardLink href="#" tag={Link} to={"/person/" + youngestUncleId}>Check his details </CardLink>
+                        <CardLink href="#" tag={Link} to={"/person/" + youngestUncleId}>Check his details</CardLink>
+                    </Card>
+                </CardGroup>
+                <CardGroup>
+                    <Card body className="text-center">
+                        <CardTitle>Most ancestors</CardTitle>
+                        <img class="center" src={AncestorAvatar} alt="AncestorAvatar"/>
+                        <CardText>{mostAncestors}</CardText>
+                        <CardLink href="#" tag={Link} to={"/person/" + mostAncestorsId}>Check details</CardLink>
                     </Card>
                 </CardGroup>
             </Container>

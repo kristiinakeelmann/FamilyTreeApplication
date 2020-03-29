@@ -56,8 +56,14 @@ public class PersonFinder {
             return Collections.emptyList();
         }
         List<Person> parents = new ArrayList<>();
-        parents.add(findMother(selectedPerson));
-        parents.add(findFather(selectedPerson));
+        if (selectedPerson.getBiologicalMotherId() != null) {
+            parents.add(findMother(selectedPerson));
+        }
+
+        if (selectedPerson.getBiologicalFatherId() != null) {
+            parents.add(findFather(selectedPerson));
+        }
+
         return parents;
     }
 
