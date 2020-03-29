@@ -6,6 +6,7 @@ import PersonEdit from './PersonEdit';
 import RelationEdit from './RelationEdit';
 import FamilyTreeView from "./FamilyTreeView";
 import StatisticsView from "./StatisticsView";
+import PageNotFound from "./PageNotFound";
 
 
 
@@ -20,7 +21,7 @@ class App extends Component {
                     <Route path='/relation/:id' exact={true} component={RelationEdit}/>
                     <Route path='/familytree/:id' exact={true} component={FamilyTreeView}/>
                     <Route path='/statistics' exact={true} component={StatisticsView}/>
-                    <Route component={PersonList}/>
+                    <Route component={PageNotFound}/>
                 </Switch>
             </Router>
         )
