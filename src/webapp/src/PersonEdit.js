@@ -76,9 +76,9 @@ class PersonEdit extends Component {
 
         if (!hasErrors) {
             this.props.history.push('/persons');
+            this.props.handleSuccess();
         }
     }
-
 
 
     render() {

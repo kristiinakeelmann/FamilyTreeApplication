@@ -1,9 +1,6 @@
 import React, {Component} from 'react';
 import {Link, withRouter} from 'react-router-dom';
-import {
-    Button, Container, Form, FormGroup, Input, Label, Alert, Spinner, Card, CardImg, CardText, CardBody, CardLink,
-    CardTitle, CardSubtitle, Row, Col, CardGroup
-} from 'reactstrap';
+import { Container, Form, FormGroup, Input, Label, Alert, Spinner, Card, CardText, CardLink, CardTitle, CardGroup } from 'reactstrap';
 import AppNavbar from './AppNavbar';
 import FemaleAvatar from './illustrations/undraw_female_avatar_w3jk.svg';
 import MaleAvatar from './illustrations/undraw_male_avatar_323b.svg';

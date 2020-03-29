@@ -98,6 +98,7 @@ class RelationEdit extends Component {
 
         });
         this.props.history.push('/persons');
+        this.props.handleSuccess();
     }
 
     render() {
