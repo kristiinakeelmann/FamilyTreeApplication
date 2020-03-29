@@ -8,8 +8,6 @@ import FamilyTreeView from "./FamilyTreeView";
 import StatisticsView from "./StatisticsView";
 import PageNotFound from "./PageNotFound";
 
-
-
 class App extends Component {
     render() {
         return (

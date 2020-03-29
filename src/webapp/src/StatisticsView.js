@@ -5,9 +5,9 @@ import {
     CardTitle, CardSubtitle, Row, Col, CardGroup
 } from 'reactstrap';
 import AppNavbar from './AppNavbar';
-import FemaleAvatar from './undraw_female_avatar_w3jk.svg';
-import MaleAvatar from './undraw_male_avatar_323b.svg';
-import AncestorAvatar from './undraw_gradma_wanr.svg';
+import FemaleAvatar from './illustrations/undraw_female_avatar_w3jk.svg';
+import MaleAvatar from './illustrations/undraw_male_avatar_323b.svg';
+import AncestorAvatar from './illustrations/undraw_gradma_wanr.svg';
 
 class StatisticsView extends Component {
 

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Container, Card, CardText, CardGroup, CardLink} from 'reactstrap';
 import AppNavbar from './AppNavbar';
-import PageNotFoundImage from './undraw_page_not_found_su7k.svg';
+import PageNotFoundImage from './illustrations/undraw_page_not_found_su7k.svg';
 import {Link} from "react-router-dom";
 
 export default class PageNotFound extends Component {
