@@ -1,6 +1,19 @@
 import React, {Component} from 'react';
 import {Link, withRouter} from 'react-router-dom';
-import {Container, Form, FormGroup, Input, Label, Alert, Spinner, Card, CardText, CardLink, CardTitle, CardGroup} from 'reactstrap';
+import {
+    Alert,
+    Card,
+    CardGroup,
+    CardLink,
+    CardText,
+    CardTitle,
+    Container,
+    Form,
+    FormGroup,
+    Input,
+    Label,
+    Spinner
+} from 'reactstrap';
 import AppNavbar from './AppNavbar';
 import FemaleAvatar from './illustrations/undraw_female_avatar_w3jk.svg';
 import MaleAvatar from './illustrations/undraw_male_avatar_323b.svg';
@@ -30,7 +43,7 @@ class StatisticsView extends Component {
         this.getYoungestUncle();
         this.loadMostAncestors();
 
-        const allPersons = await fetch('/persons')
+        const allPersons = await fetch('/api/persons')
             .then(response => response.json());
         this.setState({persons: allPersons, isLoading: false});
 
@@ -51,7 +64,7 @@ class StatisticsView extends Component {
     getYoungestAunt() {
 
         let method = 'GET';
-        let path = '/youngestaunt';
+        let path = '/api/youngestaunt';
 
         fetch(path, {
             method: method,
@@ -67,7 +80,7 @@ class StatisticsView extends Component {
     getYoungestUncle() {
 
         let method = 'GET';
-        let path = '/youngestuncle';
+        let path = '/api/youngestuncle';
 
         fetch(path, {
             method: method,
@@ -83,7 +96,7 @@ class StatisticsView extends Component {
     getBirthOrder(selectedPersonId) {
 
         let method = 'GET';
-        let path = '/birthorder/' + selectedPersonId;
+        let path = '/api/birthorder/' + selectedPersonId;
 
         fetch(path, {
             method: method,
@@ -98,11 +111,11 @@ class StatisticsView extends Component {
 
     async loadMostAncestors() {
 
-        const mostAncestors = await fetch('/mostancestors')
+        const mostAncestors = await fetch('/api/mostancestors')
             .then(response => response.json());
         this.setState({mostAncestors: mostAncestors, isLoading: false});
 
-        const ancestorsNames = await fetch('/ancestornames/' + mostAncestors.id)
+        const ancestorsNames = await fetch('/api/ancestornames/' + mostAncestors.id)
             .then(response => response.json());
         this.setState({ancestorsNames: ancestorsNames, isLoading: false});
 

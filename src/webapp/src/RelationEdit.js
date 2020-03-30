@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Link, withRouter} from 'react-router-dom';
-import {Button, Container, Form, FormGroup, Input, Label, Alert, Spinner} from 'reactstrap';
+import {Alert, Button, Container, Form, FormGroup, Input, Label, Spinner} from 'reactstrap';
 import AppNavbar from './AppNavbar';
 
 class RelationEdit extends Component {
@@ -23,7 +23,7 @@ class RelationEdit extends Component {
         this.setState({selectedMotherId: 2});
         this.setState({selectedFatherId: 3});
 
-        fetch('/persons')
+        fetch('/api/persons')
             .then(response => response.json())
             .then(data => this.setState({persons: data, isLoading: false}));
     }
@@ -86,7 +86,7 @@ class RelationEdit extends Component {
         selectedPerson.biologicalFatherId = this.state.selectedFatherId;
 
         let method = 'PUT';
-        let path = '/person/' + selectedPersonId;
+        let path = '/api/person/' + selectedPersonId;
 
         await fetch(path, {
             method: method,

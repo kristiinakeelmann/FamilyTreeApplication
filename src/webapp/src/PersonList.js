@@ -17,7 +17,7 @@ class PersonList extends Component {
   componentDidMount() {
     this.setState({isLoading: true});
 
-    fetch('/persons')
+    fetch('/api/persons')
       .then(response => response.json())
       .then(data => this.setState({persons: data, isLoading: false}));
   }

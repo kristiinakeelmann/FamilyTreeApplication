@@ -18,7 +18,7 @@ class FamilyTree extends Component {
     getFamilyTree(selectedPersonId) {
 
         let method = 'GET';
-        let path = '/familytree/' + selectedPersonId;
+        let path = '/api/familytree/' + selectedPersonId;
 
         fetch(path, {
             method: method,

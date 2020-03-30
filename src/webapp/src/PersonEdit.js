@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Link, withRouter} from 'react-router-dom';
-import {Button, Container, Form, FormGroup, Input, Label, FormText, Alert} from 'reactstrap';
+import {Alert, Button, Container, Form, FormGroup, FormText, Input, Label} from 'reactstrap';
 import AppNavbar from './AppNavbar';
 
 class PersonEdit extends Component {
@@ -23,7 +23,7 @@ class PersonEdit extends Component {
 
     async componentDidMount() {
         if (this.props.match.params.id !== 'new') {
-            const person = await (await fetch(`/person/${this.props.match.params.id}`)).json();
+            const person = await (await fetch(`/api/person/${this.props.match.params.id}`)).json();
             this.setState({item: person});
         }
     }
@@ -47,10 +47,10 @@ class PersonEdit extends Component {
 
         if (item.id != null) {
             method = 'PUT';
-            path = '/person/' + item.id;
+            path = '/api/person/' + item.id;
         } else {
             method = 'POST';
-            path = '/person/';
+            path = '/api/person/';
         }
 
         const hasErrors = await fetch(path, {

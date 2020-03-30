@@ -24,7 +24,7 @@ class FamilyTreeView extends Component {
         this.setState({isLoading: true});
         this.setState({selectedPersonId: 1});
 
-        fetch('/persons')
+        fetch('/api/persons')
             .then(response => response.json())
             .then(data => this.setState({persons: data, isLoading: false}));
     }
