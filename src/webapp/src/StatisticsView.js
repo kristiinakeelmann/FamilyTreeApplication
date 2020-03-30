@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Link, withRouter} from 'react-router-dom';
-import { Container, Form, FormGroup, Input, Label, Alert, Spinner, Card, CardText, CardLink, CardTitle, CardGroup } from 'reactstrap';
+import {Container, Form, FormGroup, Input, Label, Alert, Spinner, Card, CardText, CardLink, CardTitle, CardGroup} from 'reactstrap';
 import AppNavbar from './AppNavbar';
 import FemaleAvatar from './illustrations/undraw_female_avatar_w3jk.svg';
 import MaleAvatar from './illustrations/undraw_male_avatar_323b.svg';
@@ -16,22 +16,24 @@ class StatisticsView extends Component {
             youngestUncle: [],
             mostAncestors: [],
             birthOrder: [],
+            ancestorsNames: [],
         };
 
         this.handlePersonChange = this.handlePersonChange.bind(this);
 
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         this.setState({isLoading: true});
         this.setState({selectedPersonId: 1});
         this.getYoungestAunt();
         this.getYoungestUncle();
-        this.getMostAncestors();
+        this.loadMostAncestors();
 
-        fetch('/persons')
-            .then(response => response.json())
-            .then(data => this.setState({persons: data, isLoading: false}));
+        const allPersons = await fetch('/persons')
+            .then(response => response.json());
+        this.setState({persons: allPersons, isLoading: false});
+
     }
 
     getPerson(id) {
@@ -45,7 +47,6 @@ class StatisticsView extends Component {
         this.getBirthOrder(selectedPersonId);
 
     }
-
 
     getYoungestAunt() {
 
@@ -95,22 +96,18 @@ class StatisticsView extends Component {
             .then(data => this.setState({birthOrder: data, isLoading: false}));
     }
 
-    getMostAncestors() {
+    async loadMostAncestors() {
 
-        let method = 'GET';
-        let path = '/mostancestors';
+        const mostAncestors = await fetch('/mostancestors')
+            .then(response => response.json());
+        this.setState({mostAncestors: mostAncestors, isLoading: false});
 
-        fetch(path, {
-            method: method,
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-        })
-            .then(response => response.json())
-            .then(data => this.setState({mostAncestors: data, isLoading: false}));
+        const ancestorsNames = await fetch('/ancestornames/' + mostAncestors.id)
+            .then(response => response.json());
+        this.setState({ancestorsNames: ancestorsNames, isLoading: false});
+
+
     }
-
 
     getErrors() {
 
@@ -131,6 +128,7 @@ class StatisticsView extends Component {
         const birthOrder = this.state.birthOrder.toString();
         const mostAncestors = this.state.mostAncestors.firstName;
         const mostAncestorsId = this.state.mostAncestors.id;
+        const ancestorsNames = this.state.ancestorsNames;
 
         if (isLoading) {
             return <Spinner style={{width: '3rem', height: '3rem'}} type="grow"/>;
@@ -181,6 +179,7 @@ class StatisticsView extends Component {
                         <CardTitle>Most ancestors</CardTitle>
                         <img class="center" src={AncestorAvatar} alt="AncestorAvatar"/>
                         <CardText>{mostAncestors}</CardText>
+                        <CardText>{ancestorsNames}</CardText>
                         <CardLink href="#" tag={Link} to={"/person/" + mostAncestorsId}>Check details</CardLink>
                     </Card>
                 </CardGroup>

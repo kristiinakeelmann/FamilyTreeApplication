@@ -45,5 +45,10 @@ public class StatisticsController {
         return statisticsService.mostAncestors(allPersons);
     }
 
+    @GetMapping("/ancestornames/{id}")
+    List <String> ancestorNames(@PathVariable Long id) {
 
+        List<Person> allPersons = repository.findAll();
+        return statisticsService.findAncestorsNames(allPersons, id);
+    }
 }

@@ -15,7 +15,6 @@ class PersonList extends Component {
     }
   }
 
-
   componentDidMount() {
     this.setState({isLoading: true});
 

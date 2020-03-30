@@ -116,6 +116,19 @@ public class StatisticsService {
         return ancestors;
     }
 
+    public List<String> findAncestorsNames(List<Person> allPersons, Long selectedPersonId) {
+
+        List<Person> ancestors = findAncestors(allPersons, selectedPersonId);
+        List<String> ancestorsNames = new ArrayList<String>();
+
+        for (int i = 0; i < ancestors.size(); i++) {
+            Person currentPerson = ancestors.get(i);
+            ancestorsNames.add(currentPerson.getFirstName() + ' ' + currentPerson.getLastName() + ' ');
+        }
+
+        return ancestorsNames;
+    }
+
     public Person mostAncestors(List<Person> allPersons) {
         PersonFinder personFinder = new PersonFinder(allPersons);
         Person currentlyMostAncestors = allPersons.get(0);

@@ -98,6 +98,15 @@ public class StatisticsServiceTest {
         Assert.assertEquals(null, mostAncestors);
     }
 
+
+    @Test
+    public void ancestorNames(){
+
+        List <String> findAncestors = statisticsService.findAncestorsNames(family(), 1L);
+        List<String> expected = Arrays.asList("Heljo Igarik", "Elmar Igarik", "Rea Keelmann", "Väino Keelmann", "Rutt Keelmann", "Toivo Keelmann");
+        Assert.assertEquals(expected, findAncestors);
+    }
+
     private List<Person> family() {
 
         Person selectedPerson = new Person();
