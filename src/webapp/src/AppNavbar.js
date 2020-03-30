@@ -3,9 +3,6 @@ import { Nav, Navbar, NavbarBrand, NavItem, NavLink, Container} from 'reactstrap
 import {Link} from 'react-router-dom';
 
 export default class AppNavbar extends Component {
-    constructor(props) {
-        super(props);
-    }
 
     render() {
         return <Navbar color="dark" dark expand="md">

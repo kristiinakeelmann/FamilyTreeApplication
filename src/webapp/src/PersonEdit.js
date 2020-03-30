@@ -62,8 +62,7 @@ class PersonEdit extends Component {
             body: JSON.stringify(item),
 
         }).then(function (response) {
-            console.log(response);
-            if (response.status == 400) {
+            if (response.status === 400) {
                 return response.json()
             } else return null;
         }).then(function (object) {

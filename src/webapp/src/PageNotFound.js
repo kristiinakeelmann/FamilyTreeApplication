@@ -6,10 +6,6 @@ import {Link} from "react-router-dom";
 
 export default class PageNotFound extends Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         const title = <h2>{'Page Not Found'}</h2>;
         return <div>

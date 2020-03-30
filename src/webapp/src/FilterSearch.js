@@ -1,6 +1,6 @@
 import React from 'react';
 import ButtonGroup from "reactstrap/es/ButtonGroup";
-import {Button, Container, FormGroup, Label, Table, Input} from "reactstrap";
+import { Button, Container, FormGroup, Label, Table, Input } from "reactstrap";
 import {Link} from "react-router-dom";
 
 export default class FilterSearch extends React.Component {
@@ -15,7 +15,7 @@ export default class FilterSearch extends React.Component {
         let items = this.state.initialItems;
         let key = event.target.value;
 
-        if (key != '') {
+        if (key !== '') {
             items = items.filter(function (item) {
                 if (item.firstName.toLowerCase().includes(key.toLowerCase())) {
                     return true;
@@ -33,7 +33,7 @@ export default class FilterSearch extends React.Component {
     }
 
 
-    componentWillMount = () => {
+    componentDidMount = () => {
         this.setState({
             initialItems: this.props.content,
             items: this.props.content

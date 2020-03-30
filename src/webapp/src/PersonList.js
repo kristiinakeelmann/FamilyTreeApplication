@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { Button, ButtonGroup, Container, Table, Spinner, Alert } from 'reactstrap';
+import { Container, Spinner, Alert } from 'reactstrap';
 import AppNavbar from './AppNavbar';
-import { Link } from 'react-router-dom';
 import FilterSearch from './FilterSearch.js';
 
 class PersonList extends Component {

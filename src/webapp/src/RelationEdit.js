@@ -81,7 +81,7 @@ class RelationEdit extends Component {
     async handleSubmit(event) {
         event.preventDefault();
         const selectedPersonId = this.state.selectedPersonId;
-        const selectedPerson = this.state.persons.find(person => person.id == selectedPersonId);
+        const selectedPerson = this.state.persons.find(person => person.id === selectedPersonId);
         selectedPerson.biologicalMotherId = this.state.selectedMotherId;
         selectedPerson.biologicalFatherId = this.state.selectedFatherId;
 
@@ -134,7 +134,7 @@ class RelationEdit extends Component {
                 <Form onSubmit={this.handleSubmit}>
                     <FormGroup>
                         <Label for="exampleSelect">Select Person</Label>
-                        <Input type="select" name="selectPerson" id="exampleSelect"
+                        <Input type="select" name="selectPerson"
                                value={this.state.selectedPersonId ? this.state.selectedPersonId : null}
                                onChange={this.handlePersonChange}>
                             <option value=""></option>
@@ -143,7 +143,7 @@ class RelationEdit extends Component {
                     </FormGroup>
                     <FormGroup>
                         <Label for="exampleSelect">Select Biological Mother</Label>
-                        <Input type="select" name="selectMother" id="exampleSelect"
+                        <Input type="select" name="selectMother"
                                value={this.state.selectedMotherId ? this.state.selectedMotherId : null}
                                onChange={this.handleMotherChange}>
                             <option value=""></option>
@@ -152,7 +152,7 @@ class RelationEdit extends Component {
                     </FormGroup>
                     <FormGroup>
                         <Label for="exampleSelect">Select Biological Father</Label>
-                        <Input type="select" name="selectFather" id="exampleSelect"
+                        <Input type="select" name="selectFather"
                                value={this.state.selectedFatherId ? this.state.selectedFatherId : null}
                                onChange={this.handleFatherChange}>
                             <option value=""></option>

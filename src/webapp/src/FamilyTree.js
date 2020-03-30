@@ -40,7 +40,7 @@ class FamilyTree extends Component {
 
     componentDidUpdate(previousProps) {
         const selectedPersonId = this.props.selectedPersonId;
-        if (previousProps.selectedPersonId != selectedPersonId) {
+        if (previousProps.selectedPersonId !== selectedPersonId) {
             this.getFamilyTree(selectedPersonId);
         }
     }
